@@ -58,7 +58,7 @@ class snake(tk.Tk):
 
         # sets up bg image in main screen and initialise the snake head
         self.img_setup(self.img1)
-        
+
         self.button_exit = tk.Button(self.can,text='EXIT',command=lambda: band(self),bg='#fff0d2')
         # button_exit.pack(side='right',anchor='ne',padx=50)
         self.can.create_window(self.width-150,10,anchor='ne',window=self.button_exit)
@@ -301,6 +301,10 @@ class snake(tk.Tk):
                     self.count = 0
 
     def segments_setup(self,seg):
+        # for index in range(1, len(seg)):
+        #     x = seg[index-1].xcor()
+        #     y = seg[index-1].ycor()
+        #     seg[index].goto(x, y)
         for index in range(len(seg)-1, 0, -1):
             x = seg[index-1].xcor()
             y = seg[index-1].ycor()

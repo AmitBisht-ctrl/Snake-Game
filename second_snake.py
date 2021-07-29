@@ -1,7 +1,10 @@
 import turtle
 
-def sec_snake(z):
-    head2 = turtle.RawTurtle(z)
+def sec_snake(screen):
+    head2 = turtle.RawTurtle(screen)
+
+
+    
     head2.hideturtle()
     head2.direction = 'stop'
     head2.speed(0)
@@ -46,13 +49,13 @@ def sec_snake(z):
                 head2.direction = 'right'
 
         # keybinding for 2nd snake
-        nonlocal z
-        z.listen()
+        nonlocal screen
+        screen.listen()
         # if snake_no == 2:
-        z.onkeypress(go_up2, 'i')
-        z.onkeypress(go_down2, 'k')
-        z.onkeypress(go_right2, 'l')
-        z.onkeypress(go_left2, 'j')
+        screen.onkeypress(go_up2, 'i')
+        screen.onkeypress(go_down2, 'k')
+        screen.onkeypress(go_right2, 'l')
+        screen.onkeypress(go_left2, 'j')
 
     return move2, head2
 

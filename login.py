@@ -63,6 +63,7 @@ def log_in():
 
                     s = main_snake.snake()
 
+                    # loop from login page runs the loop
 
             except Exception as e:
                 warn.config(text=e)
@@ -92,7 +93,7 @@ username = StringVar()
 password = StringVar()
 
 user = Label(f,text='Username:',font=('goudy old style',15),fg='#003300')
-user.place(x=100,y=135) 
+user.place(x=100,y=135)
 
 user_entry = Entry(f,textvariable=username,fg='green',bg='light grey',justify="center",font='algerian 13')
 user_entry.place(x=100,y=165)
