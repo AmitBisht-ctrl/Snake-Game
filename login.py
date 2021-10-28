@@ -43,7 +43,6 @@ def log_in():
         return
 
     else:
-        
         i = cur.execute("select username from account where username='%s'"%(user_entry.get()))
         user_entry.config(fg='red')
         warn.config(text='Username doesnt exist')
@@ -61,7 +60,7 @@ def log_in():
                     mixer.music.load('music/Sands_of_Mystery.mp3')
                     mixer.music.play()
 
-                    s = main_snake.snake()
+                    main_snake.snake()
 
                     # loop from login page runs the loop
 

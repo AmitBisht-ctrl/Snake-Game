@@ -27,12 +27,12 @@ class snake(tk.Tk):
         self.m_highscore = 0
         self.score = 0
         self.high_score = 0
-        
+
         self.img1 = 'bg img/desert.jpg'
         self.img2 = 'bg img/sun.jpg'
         self.im = [self.img1,self.img2]
         self.colors = ['#fff0d2','#cce6ff']
-        
+
         self.segments = []
         self.segments2 = []
 
@@ -177,7 +177,7 @@ class snake(tk.Tk):
 
             # snake eats food/ head collides food
             if self.head.distance(self.food) < 20:
-                self.a += 1         
+                self.a += 1        
 
                 x = random.randint(-340, 340)
                 y = random.randint(-340, 340)
@@ -490,14 +490,14 @@ class snake(tk.Tk):
         self.head.color('#804d00')
         self.head.penup()
         self.head.direction = 'stop'
-        self.head._tracer(0)
+        # self.head._tracer(0)
 
     def foods(self):
         self.food = turtle.RawTurtle(self.turt_screen)
         self.food.ht()
         self.food.shape('circle')
         self.food.color('#336600')
-        self.food._tracer(0)
+        # self.food._tracer(0)
         self.food.penup()
         self.food.goto(0,100)
 
@@ -507,15 +507,15 @@ class snake(tk.Tk):
             y = self.head.ycor()
             self.head.sety(y + self.speed)
 
-        if self.head.direction == 'down':            
+        elif self.head.direction == 'down':            
             y = self.head.ycor()
             self.head.sety(y - self.speed)
 
-        if self.head.direction == 'right':
+        elif self.head.direction == 'right':
             x = self.head.xcor()
             self.head.setx(x + self.speed)
 
-        if self.head.direction == 'left':
+        elif self.head.direction == 'left':
             x = self.head.xcor()
             self.head.setx(x - self.speed) 
 
@@ -545,34 +545,62 @@ class snake(tk.Tk):
         self.turt_screen.onkeypress(go_left, 'a')     
     
     def screen_closing(self):
-        def on_closing(self):
-            try:
-                i = self.cur.execute("select highest_score from high_score order by highest_score desc")
-                if i > 0:
-                    highest_score = self.cur.fetchone()[0]
-                    print(highest_score,'sing')
-                    if self.high_score > highest_score:
-                        j = self.cur.execute("insert into high_score (highest_score) values(%d)"%(self.high_score))
-                        if j == 1:
-                            self.con.commit()
+        self.protocol('WM_DELETE_WINDOW',self.on_closing)
 
-                j = self.cur.execute("select highest_score from multi_score order by highest_score desc")
-                if j > 0:
-                    highest_score = self.cur.fetchone()[0]
-                    if self.m_highscore > highest_score:
-                        k = self.cur.execute("insert into multi_score (highest_score) values(%d)"%(self.m_highscore))
-                        if k == 1:
-                            self.con.commit()
+    def save_single_high_score(self):
+        try:
+            i = self.cur.execute("select highest_score from high_score order by highest_score desc")
+            print(i,'value of i')
+            if i > 0:
+                highest_score = self.cur.fetchone()[0]
+                if self.high_score > highest_score:
+                    j = self.cur.execute("insert into high_score (highest_score) values(%d)"%(self.high_score))
+                    if j == 1:
+                        self.con.commit()
+            else:
+                j = self.cur.execute("insert into high_score (highest_score) values(%d)"%(self.high_score))
+                if j == 1:
+                    self.con.commit()
 
-            except Exception as e:
-                print(e)
+        except Exception as e:
+            print(e)
 
-            finally:
-                self.con.close()
-                mixer.music.stop()
-                self.destroy()
+        # finally:
+        #     self.con.close()
+        #     mixer.music.stop()
+        #     self.destroy()
 
-        self.protocol('WM_DELETE_WINDOW',lambda: on_closing(self))
+    def save_multi_score(self):
+        try:
+            j = self.cur.execute("select highest_score from multi_score order by highest_score desc")
+            print('this much worked')
+            if j > 0:
+                highest_score = self.cur.fetchone()[0]
+                if self.m_highscore > highest_score:
+                    k = self.cur.execute("insert into multi_score (highest_score) values(%d)"%(self.m_highscore))
+                    if k == 1:
+                        self.con.commit()
+            else:
+                print('value of m_highscore',self.m_highscore)
+                k = self.cur.execute("insert into multi_score (highest_score) values(%d)"%(self.m_highscore))
+                print('value of k: ',k)
+                if k == 1:
+                    self.con.commit()
+
+        except Exception as e:
+            print(e)
+
+        finally:
+            self.con.close()
+            mixer.music.stop()
+            self.destroy()
+
+
+
+    def on_closing(self):
+        self.save_single_high_score()
+        self.save_multi_score()
+                
 
     def save(self):
         def saves(self):

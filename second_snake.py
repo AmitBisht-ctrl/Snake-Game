@@ -2,8 +2,6 @@ import turtle
 
 def sec_snake(screen):
     head2 = turtle.RawTurtle(screen)
-
-
     
     head2.hideturtle()
     head2.direction = 'stop'
@@ -13,22 +11,21 @@ def sec_snake(screen):
     head2.penup()
     head2.goto(100, 0)
 
-
     def move2(speed,snake_no):
 
         if head2.direction == 'up':
             y = head2.ycor()
             head2.sety(y + speed)
 
-        if head2.direction == 'down':
+        elif head2.direction == 'down':
             y = head2.ycor()
             head2.sety(y - speed)
 
-        if head2.direction == 'right':
+        elif head2.direction == 'right':
             x = head2.xcor()
             head2.setx(x + speed)
 
-        if head2.direction == 'left':
+        elif head2.direction == 'left':
             x = head2.xcor()
             head2.setx(x - speed)
 
